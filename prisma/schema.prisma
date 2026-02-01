@@ -1,0 +1,37 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  accounts  Account[]
+  createdAt DateTime  @default(now())
+}
+
+model Account {
+  id                String     @id @default(cuid())
+  userId            String
+  user              User       @relation(fields: [userId], references: [id])
+  provider          String     // "google"
+  email             String     @unique // Email de la cuenta de Google vinculada
+  accessToken       String     @db.Text
+  refreshToken      String?    @db.Text
+  expiresAt         Int?
+  calendars         Calendar[]
+}
+
+model Calendar {
+  id               String   @id @default(cuid())
+  accountId        String
+  account          Account  @relation(fields: [accountId], references: [id])
+  googleCalendarId String
+  name             String
+  color            String
+  isVisible        Boolean  @default(true)
+}
