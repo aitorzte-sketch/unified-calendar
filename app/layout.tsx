@@ -1,7 +1,8 @@
-'use client'; // Necesario si usas SessionProvider directamente aquí
-
-import { SessionProvider } from "next-auth/react";
+import { Inter } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./providers"; // Vamos a crear este archivo ahora
+
+const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,
@@ -10,10 +11,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es">
-      <body>
-        <SessionProvider>
-          {children}
-        </SessionProvider>
+      <body className={inter.className}>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
