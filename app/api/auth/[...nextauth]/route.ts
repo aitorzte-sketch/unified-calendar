@@ -9,22 +9,17 @@ const handler = NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      authorization: {
-        params: {
-          scope: "openid email profile https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events",
-          access_type: "offline",
-          prompt: "consent",
-        },
-      },
     }),
   ],
   callbacks: {
     async session({ session, user }) {
-      // Esto permite que la web sepa el ID del usuario para buscar sus tokens
-      session.user.id = user.id;
+      if (session.user) {
+        session.user.id = user.id;
+      }
       return session;
     },
   },
+  secret: process.env.NEXTAUTH_SECRET,
 });
 
 export { handler as GET, handler as POST };
