@@ -1,17 +1,26 @@
-'use client'
+'use client'; // Esta línea es VITAL para que el botón funcione
 
-import { signIn } from "next-auth/react"
+import { signIn } from "next-auth/react";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-black text-white">
-      <h1 className="text-4xl font-bold mb-8">Mi Calendario Unificado</h1>
+    <main style={{ padding: '50px', backgroundColor: 'black', minHeight: '100vh', color: 'white' }}>
+      <h1>Mi Calendario Unificado</h1>
+      
       <button 
-        onClick={() => signIn('google')}
-        className="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition"
+        onClick={() => signIn('google')} 
+        style={{
+          padding: '10px 20px',
+          cursor: 'pointer',
+          backgroundColor: 'white',
+          color: 'black',
+          border: 'none',
+          borderRadius: '5px',
+          fontWeight: 'bold'
+        }}
       >
         Entrar con Google
       </button>
     </main>
-  )
+  );
 }
